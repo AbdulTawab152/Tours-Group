@@ -12,8 +12,11 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    console.log("🔍 Login attempt:", { username, password: password ? "***" : "undefined" });
+
     // Validate input
     if (!username || !password) {
+      console.log("❌ Missing username or password");
       return res
         .status(400)
         .json({ error: "Username and password are required" });
@@ -21,18 +24,31 @@ router.post("/login", async (req, res) => {
 
     // Find user by username
     const user = await User.findOne({ username });
+    console.log("🔍 User found:", user ? "Yes" : "No");
     if (!user) {
+      console.log("❌ User not found in database");
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    console.log("🔍 User details:", {
+      username: user.username,
+      role: user.role,
+      isActive: user.isActive,
+      hasPassword: !!user.password
+    });
+
     // Check if user is active
     if (!user.isActive) {
+      console.log("❌ User account is deactivated");
       return res.status(401).json({ error: "Account is deactivated" });
     }
 
     // Verify password
+    console.log("🔍 Comparing password...");
     const isPasswordValid = await user.comparePassword(password);
+    console.log("🔍 Password valid:", isPasswordValid);
     if (!isPasswordValid) {
+      console.log("❌ Password comparison failed");
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
@@ -118,6 +134,41 @@ router.get("/verify", authenticateToken, async (req, res) => {
     });
   } catch (error) {
     res.status(401).json({ valid: false, error: "Invalid token" });
+  }
+});
+
+// Change password route
+router.post("/change-password", authenticateToken, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    // Validate input
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ 
+        error: "Current password and new password are required" 
+      });
+    }
+
+    // Find user
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Verify current password
+    const isCurrentPasswordValid = await user.comparePassword(currentPassword);
+    if (!isCurrentPasswordValid) {
+      return res.status(401).json({ error: "Current password is incorrect" });
+    }
+
+    // Update password
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: "Password changed successfully" });
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

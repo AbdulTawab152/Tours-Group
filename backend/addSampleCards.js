@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Card = require("./models/Card");
 
-mongoose.connect("mongodb://localhost:27017/cardsDB");
+mongoose.connect(
+  "mongodb+srv://abdultawabsamadzai:gfBiuGJLUKRubwIt@cluster0.ysv44j0.mongodb.net/Group-Tours"
+);
 
 const cardSchema = new mongoose.Schema({
   title: { type: String, required: true },

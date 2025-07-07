@@ -14,7 +14,29 @@ const sampleHotels = [
     image:
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
     amenities: ["Free WiFi", "Swimming Pool", "Spa", "Restaurant", "Gym"],
-    roomTypes: ["Standard", "Deluxe", "Suite"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 150,
+        capacity: 2,
+        description: "Comfortable room with city view",
+        features: ["Queen Bed", "City View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Deluxe Room",
+        price: 200,
+        capacity: 3,
+        description: "Spacious room with premium amenities",
+        features: ["King Bed", "Balcony", "City View", "Mini Bar", "Premium WiFi"]
+      },
+      {
+        name: "Executive Suite",
+        price: 350,
+        capacity: 4,
+        description: "Luxury suite with separate living area",
+        features: ["King Bed", "Living Room", "Balcony", "Premium WiFi", "Room Service"]
+      }
+    ],
     address: "Downtown Kabul, Afghanistan",
   },
   {
@@ -34,7 +56,22 @@ const sampleHotels = [
       "Free WiFi",
       "Parking",
     ],
-    roomTypes: ["Standard", "Deluxe"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 120,
+        capacity: 2,
+        description: "Cozy room with mountain view",
+        features: ["Queen Bed", "Mountain View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Deluxe Room",
+        price: 160,
+        capacity: 3,
+        description: "Spacious room with panoramic mountain views",
+        features: ["King Bed", "Balcony", "Mountain View", "Premium WiFi", "Fireplace"]
+      }
+    ],
     address: "Bamyan Valley, Afghanistan",
   },
   {
@@ -53,7 +90,29 @@ const sampleHotels = [
       "Free WiFi",
       "Conference Room",
     ],
-    roomTypes: ["Standard", "Business", "Suite"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 100,
+        capacity: 2,
+        description: "Comfortable room in historic setting",
+        features: ["Queen Bed", "City View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Business Room",
+        price: 140,
+        capacity: 2,
+        description: "Perfect for business travelers",
+        features: ["King Bed", "Work Desk", "High-Speed WiFi", "Business Center Access"]
+      },
+      {
+        name: "Executive Suite",
+        price: 250,
+        capacity: 4,
+        description: "Luxury suite with business amenities",
+        features: ["King Bed", "Living Room", "Work Area", "Premium WiFi", "Conference Access"]
+      }
+    ],
     address: "Central Herat, Afghanistan",
   },
   {
@@ -67,7 +126,22 @@ const sampleHotels = [
     image:
       "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=80",
     amenities: ["Free WiFi", "Restaurant", "Bar", "Parking", "Room Service"],
-    roomTypes: ["Standard", "Deluxe"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 90,
+        capacity: 2,
+        description: "Comfortable room in city center",
+        features: ["Queen Bed", "City View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Deluxe Room",
+        price: 130,
+        capacity: 3,
+        description: "Spacious room with premium amenities",
+        features: ["King Bed", "Balcony", "City View", "Mini Bar", "Premium WiFi"]
+      }
+    ],
     address: "Kandahar City Center, Afghanistan",
   },
   {
@@ -87,7 +161,29 @@ const sampleHotels = [
       "Garden",
       "Traditional Decor",
     ],
-    roomTypes: ["Standard", "Deluxe", "Royal Suite"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 110,
+        capacity: 2,
+        description: "Traditional room with garden view",
+        features: ["Queen Bed", "Garden View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Deluxe Room",
+        price: 160,
+        capacity: 3,
+        description: "Spacious room with traditional decor",
+        features: ["King Bed", "Balcony", "Garden View", "Premium WiFi", "Traditional Decor"]
+      },
+      {
+        name: "Royal Suite",
+        price: 300,
+        capacity: 4,
+        description: "Luxury suite with traditional Afghan design",
+        features: ["King Bed", "Living Room", "Balcony", "Premium WiFi", "Traditional Decor", "Room Service"]
+      }
+    ],
     address: "Near Blue Mosque, Mazar-e-Sharif, Afghanistan",
   },
   {
@@ -107,7 +203,22 @@ const sampleHotels = [
       "Free WiFi",
       "Parking",
     ],
-    roomTypes: ["Standard", "Garden View"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 85,
+        capacity: 2,
+        description: "Comfortable room with garden view",
+        features: ["Queen Bed", "Garden View", "Free WiFi", "TV"]
+      },
+      {
+        name: "Garden View Room",
+        price: 120,
+        capacity: 3,
+        description: "Spacious room with beautiful garden and river views",
+        features: ["King Bed", "Balcony", "Garden View", "River View", "Premium WiFi"]
+      }
+    ],
     address: "Riverside, Jalalabad, Afghanistan",
   },
   {
@@ -127,7 +238,29 @@ const sampleHotels = [
       "Restaurant",
       "Gym",
     ],
-    roomTypes: ["Business", "Executive", "Suite"],
+    roomTypes: [
+      {
+        name: "Business Room",
+        price: 130,
+        capacity: 2,
+        description: "Perfect for business travelers",
+        features: ["King Bed", "Work Desk", "High-Speed WiFi", "Business Center Access"]
+      },
+      {
+        name: "Executive Room",
+        price: 180,
+        capacity: 2,
+        description: "Premium business room with extra amenities",
+        features: ["King Bed", "Work Area", "Premium WiFi", "Business Center Access", "Mini Bar"]
+      },
+      {
+        name: "Executive Suite",
+        price: 280,
+        capacity: 4,
+        description: "Luxury suite with full business facilities",
+        features: ["King Bed", "Living Room", "Work Area", "Premium WiFi", "Conference Access", "Room Service"]
+      }
+    ],
     address: "Business District, Kabul, Afghanistan",
   },
   {
@@ -147,17 +280,35 @@ const sampleHotels = [
       "Restaurant",
       "Hiking Tours",
     ],
-    roomTypes: ["Standard", "Deluxe"],
+    roomTypes: [
+      {
+        name: "Standard Room",
+        price: 95,
+        capacity: 2,
+        description: "Eco-friendly room with mountain view",
+        features: ["Queen Bed", "Mountain View", "Free WiFi", "Eco-friendly"]
+      },
+      {
+        name: "Deluxe Room",
+        price: 140,
+        capacity: 3,
+        description: "Spacious eco-friendly room with panoramic views",
+        features: ["King Bed", "Balcony", "Mountain View", "Premium WiFi", "Eco-friendly"]
+      }
+    ],
     address: "Buddha Cliffs Area, Bamyan, Afghanistan",
   },
 ];
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/cardsDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://abdultawabsamadzai:gfBiuGJLUKRubwIt@cluster0.ysv44j0.mongodb.net/Group-Tours",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(async () => {
     console.log("✅ Connected to MongoDB");
 

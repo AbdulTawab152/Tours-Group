@@ -4,18 +4,45 @@ const bookingSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
-  checkIn: { type: Date, required: true },
-  checkOut: { type: Date, required: true },
   guests: { type: Number, required: true },
-  roomType: { type: String, required: true },
   specialRequests: String,
 
   // Booking type (group tour or hotel)
-  bookingType: { type: String, enum: ["group", "hotel"], default: "group" },
+  bookingType: {
+    type: String,
+    enum: ["group", "hotel", "tour"],
+    default: "group",
+  },
   status: {
     type: String,
     enum: ["pending", "confirmed", "cancelled"],
     default: "pending",
+  },
+
+  // Hotel-specific fields (only required for hotel bookings)
+  checkIn: {
+    type: Date,
+    required: function () {
+      return this.bookingType === "hotel";
+    },
+  },
+  checkOut: {
+    type: Date,
+    required: function () {
+      return this.bookingType === "hotel";
+    },
+  },
+  roomType: {
+    type: String,
+    required: function () {
+      return this.bookingType === "hotel";
+    },
+  },
+  nights: {
+    type: Number,
+    required: function () {
+      return this.bookingType === "hotel";
+    },
   },
 
   // Hotel information (for hotel bookings)
@@ -51,25 +78,24 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Card",
     required: function () {
-      return this.bookingType === "group";
+      return this.bookingType === "group" || this.bookingType === "tour";
     },
   },
   hotelTitle: {
     type: String,
     required: function () {
-      return this.bookingType === "group";
+      return this.bookingType === "group" || this.bookingType === "tour";
     },
   },
   hotelPrice: {
     type: Number,
     required: function () {
-      return this.bookingType === "group";
+      return this.bookingType === "group" || this.bookingType === "tour";
     },
   },
 
   // Common fields
   totalPrice: { type: Number, required: true },
-  nights: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 module.exports = mongoose.model("Booking", bookingSchema);

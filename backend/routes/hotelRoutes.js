@@ -95,11 +95,11 @@ router.put(
     { name: "images", maxCount: 10 },
   ]),
   async (req, res) => {
-    try {
+  try {
       console.log("Updating hotel data:", req.body);
       console.log("Update files:", req.files);
 
-      const updateData = {
+    const updateData = {
         name: req.body.name,
         city: req.body.city,
         province: req.body.province,
@@ -128,21 +128,39 @@ router.put(
         const imagePaths = imageFiles.map(
           (file) => `/uploads/${file.filename}`
         );
-        updateData.images = imagePaths;
+        
+        // If there are existing images in the request body, combine them
+        if (req.body.images) {
+          try {
+            const existingImages = JSON.parse(req.body.images);
+            updateData.images = [...existingImages, ...imagePaths];
+          } catch (e) {
+            updateData.images = imagePaths;
+          }
+        } else {
+          updateData.images = imagePaths;
+        }
+      } else if (req.body.images) {
+        // Handle case where only existing images are being updated (no new files)
+        try {
+          updateData.images = JSON.parse(req.body.images);
+        } catch (e) {
+          console.error("Error parsing existing images:", e);
+    }
       }
 
       console.log("Processed update data:", updateData);
 
-      const hotel = await Hotel.findByIdAndUpdate(req.params.id, updateData, {
-        new: true,
-        runValidators: true,
-      });
+    const hotel = await Hotel.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+    });
 
-      if (!hotel) {
-        return res.status(404).json({ error: "Hotel not found" });
-      }
-      res.json(hotel);
-    } catch (err) {
+    if (!hotel) {
+      return res.status(404).json({ error: "Hotel not found" });
+    }
+    res.json(hotel);
+  } catch (err) {
       console.error("Error updating hotel:", err);
 
       // Provide more detailed error information
@@ -156,7 +174,7 @@ router.put(
         });
       }
 
-      res.status(400).json({ error: err.message });
+    res.status(400).json({ error: err.message });
     }
   }
 );

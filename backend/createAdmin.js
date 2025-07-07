@@ -12,10 +12,13 @@ const adminUser = {
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/cardsDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://abdultawabsamadzai:gfBiuGJLUKRubwIt@cluster0.ysv44j0.mongodb.net/myDatabase",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(async () => {
     console.log("✅ Connected to MongoDB");
 

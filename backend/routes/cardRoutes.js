@@ -52,7 +52,9 @@ router.post("/cards", upload.single("image"), async (req, res) => {
 
     const cardData = {
       title,
+      name: title, // Use title as name since it's required
       description: description || "",
+      location: province, // Use province as location since it's required
       province,
       price: Number(price),
       duration: duration || "",
@@ -67,15 +69,23 @@ router.post("/cards", upload.single("image"), async (req, res) => {
     res.status(201).json(card);
   } catch (err) {
     console.error("Error creating card:", err);
-    res.status(500).json({ error: "Server error. Check backend logs." });
+    console.error("Error details:", {
+      message: err.message,
+      stack: err.stack,
+      name: err.name,
+    });
+    res.status(500).json({
+      error: "Server error. Check backend logs.",
+      details: err.message,
+    });
   }
 });
 
-// Get all cards
-router.get("/cards", async (req, res) => {
-  const cards = await Card.find();
-  res.json(cards);
-});
+// Get all cards - Remove duplicate route
+// router.get("/cards", async (req, res) => {
+//   const cards = await Card.find();
+//   res.json(cards);
+// });
 
 // Delete card
 router.delete("/cards/:id", async (req, res) => {
@@ -95,7 +105,7 @@ router.put(
   "/cards/:id",
   upload.fields([
     { name: "image", maxCount: 1 },
-    { name: "galleryImages", maxCount: 10 },
+    { name: "images", maxCount: 10 },
   ]),
   async (req, res) => {
     try {
@@ -150,15 +160,26 @@ router.put(
       }
 
       // Handle gallery images from files
-      if (req.files && req.files.galleryImages) {
-        const galleryFiles = Array.isArray(req.files.galleryImages)
-          ? req.files.galleryImages
-          : [req.files.galleryImages];
+      if (req.files && req.files.images) {
+        const galleryFiles = Array.isArray(req.files.images)
+          ? req.files.images
+          : [req.files.images];
 
         const galleryPaths = galleryFiles.map(
           (file) => `/uploads/${file.filename}`
         );
-        updateData.images = [...(updateData.images || []), ...galleryPaths];
+        
+        // If there are existing images in the request body, combine them
+        if (req.body.images) {
+          try {
+            const existingImages = JSON.parse(req.body.images);
+            updateData.images = [...existingImages, ...galleryPaths];
+          } catch (e) {
+            updateData.images = galleryPaths;
+          }
+        } else {
+          updateData.images = galleryPaths;
+        }
       }
 
       console.log("Processed update data:", updateData);

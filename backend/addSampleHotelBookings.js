@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+yconst mongoose = require("mongoose");
 const Booking = require("./models/Booking");
 const Hotel = require("./models/Hotel");
 
@@ -251,10 +251,13 @@ const sampleHotelBookings = [
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/cardsDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://abdultawabsamadzai:gfBiuGJLUKRubwIt@cluster0.ysv44j0.mongodb.net/Group-Tours",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(async () => {
     console.log("✅ Connected to MongoDB");
 
